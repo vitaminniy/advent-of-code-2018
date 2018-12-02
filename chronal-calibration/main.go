@@ -16,15 +16,31 @@ func main() {
 		frequences = append(frequences, frequency)
 	}
 
-	calibrations := make(map[int]int)
+	fmt.Printf("%d\n", getResultingFrequency(frequences))
+	fmt.Printf("%d\n", getTwiceResultedFrequency(frequences))
+}
+
+func getResultingFrequency(frequences []int) int {
+	result := 0
+	for _, frequency := range frequences {
+		result += frequency
+	}
+	return result
+}
+
+func getTwiceResultedFrequency(frequnces []int) int {
 	currentFrequency := 0
+	calibrations := map[int]int{}
+
+main:
 	for {
-		for _, frequency := range frequences {
+		for _, frequency := range frequnces {
 			currentFrequency += frequency
 			if calibrations[currentFrequency]++; calibrations[currentFrequency] == 2 {
-				fmt.Println(currentFrequency)
-				os.Exit(1)
+				break main
 			}
 		}
 	}
+
+	return currentFrequency
 }
