@@ -12,12 +12,18 @@ func main() {
 	twices := 0
 	thirds := 0
 
+	ids := []string{}
+
 	for scanner.Scan() {
 		occurrences := map[rune]int{}
 
-		for _, char := range scanner.Text() {
+		txt := scanner.Text()
+
+		for _, char := range txt {
 			occurrences[char]++
 		}
+
+		ids = append(ids, txt)
 
 		applyTwices := true
 		applyThirds := true
@@ -40,4 +46,43 @@ func main() {
 	}
 
 	fmt.Printf("%d\n", twices*thirds)
+
+	fmt.Println(findSimilar(ids))
+}
+
+func findSimilar(ids []string) string {
+	result := ""
+main:
+	for i := 0; i < len(ids); i++ {
+		for j := 0; j < len(ids); j++ {
+			if i == j {
+				continue
+			}
+
+			diffCount := 0
+
+			for idx := range ids[i] {
+				if ids[i][idx] != ids[j][idx] {
+					diffCount++
+				}
+
+				if diffCount > 1 {
+					break
+				}
+			}
+
+			if diffCount == 1 {
+				for idx := range ids[i] {
+					if ids[i][idx] == ids[j][idx] {
+						result += string(ids[i][idx])
+					}
+				}
+				fmt.Println(ids[i])
+				fmt.Println(ids[j])
+				fmt.Println()
+				break main
+			}
+		}
+	}
+	return result
 }
