@@ -31,9 +31,22 @@ func main() {
 		rectangles = append(rectangles, rect)
 	}
 
-	fmt.Printf("Total intersected rectangles: %d\n", countIntersected(rectangles))
+	fmt.Printf("Total intersected rectangles: %d\n", countIntersectedInches(rectangles))
 }
 
-func countIntersected(rectangles []rectangle) int {
-	return 0
+func countIntersectedInches(rectangles []rectangle) int {
+	result := 0
+
+	coords := make(map[coordPair]int)
+	for _, rect := range rectangles {
+		for x := rect.x; x < rect.x+rect.width; x++ {
+			for y := rect.y; y < rect.y+rect.height; y++ {
+				if coords[coordPair{x, y}]++; coords[coordPair{x, y}] == 2 {
+					result++
+				}
+			}
+		}
+	}
+
+	return result
 }

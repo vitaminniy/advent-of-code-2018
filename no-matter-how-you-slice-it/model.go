@@ -5,6 +5,10 @@ import (
 	"strings"
 )
 
+type coordPair struct {
+	x, y int
+}
+
 type rectangle struct {
 	id            int
 	x, y          int
