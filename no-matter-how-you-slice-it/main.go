@@ -31,22 +31,36 @@ func main() {
 		rectangles = append(rectangles, rect)
 	}
 
-	fmt.Printf("Total intersected rectangles: %d\n", countIntersectedInches(rectangles))
+	totalOverlapped, notIntactedID := countIntersectedInches(rectangles)
+	fmt.Printf("Total intersected rectangles: %d\n", totalOverlapped)
+	fmt.Printf("Not intacted rectangle ID: %d\n", notIntactedID)
 }
 
-func countIntersectedInches(rectangles []rectangle) int {
-	result := 0
-
-	coords := make(map[coordPair]int)
+func countIntersectedInches(rectangles []rectangle) (result int, notIntactedID int) {
+	coords := make(map[coordPair][]int)
 	for _, rect := range rectangles {
 		for x := rect.x; x < rect.x+rect.width; x++ {
 			for y := rect.y; y < rect.y+rect.height; y++ {
-				if coords[coordPair{x, y}]++; coords[coordPair{x, y}] == 2 {
+				coords[coordPair{x, y}] = append(coords[coordPair{x, y}], rect.id)
+				if len(coords[coordPair{x, y}]) == 2 {
 					result++
 				}
 			}
 		}
 	}
 
-	return result
+out:
+	for _, rect := range rectangles {
+		for x := rect.x; x < rect.x+rect.width; x++ {
+			for y := rect.y; y < rect.y+rect.height; y++ {
+				if len(coords[coordPair{x, y}]) > 1 {
+					continue out
+				}
+			}
+		}
+		notIntactedID = rect.id
+		break
+	}
+
+	return
 }
