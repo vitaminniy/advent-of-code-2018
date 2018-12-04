@@ -2,12 +2,23 @@ package main
 
 import (
 	"bufio"
+	"flag"
 	"fmt"
 	"os"
 )
 
 func main() {
-	scanner := bufio.NewScanner(os.Stdin)
+	filePath := flag.String("p", "input.txt", "Input's file path")
+	flag.Parse()
+
+	f, err := os.Open(*filePath)
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Opening input file: %v\n", err)
+		os.Exit(1)
+	}
+	defer f.Close()
+
+	scanner := bufio.NewScanner(f)
 
 	twices := 0
 	thirds := 0
@@ -45,14 +56,11 @@ func main() {
 		}
 	}
 
-	fmt.Printf("%d\n", twices*thirds)
-
-	fmt.Println(findSimilar(ids))
+	fmt.Printf("Checksum: %d\n", twices*thirds)
+	fmt.Printf("Common letters: %s\n", findCommonLetters(ids))
 }
 
-func findSimilar(ids []string) string {
-	result := ""
-main:
+func findCommonLetters(ids []string) (result string) {
 	for i := 0; i < len(ids); i++ {
 		for j := 0; j < len(ids); j++ {
 			if i == j {
@@ -77,12 +85,9 @@ main:
 						result += string(ids[i][idx])
 					}
 				}
-				fmt.Println(ids[i])
-				fmt.Println(ids[j])
-				fmt.Println()
-				break main
+				return result
 			}
 		}
 	}
-	return result
+	return
 }
