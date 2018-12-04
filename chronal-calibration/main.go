@@ -2,13 +2,24 @@ package main
 
 import (
 	"bufio"
+	"flag"
 	"fmt"
 	"os"
 	"strconv"
 )
 
 func main() {
-	scanner := bufio.NewScanner(os.Stdin)
+	filePath := flag.String("p", "input.txt", "Input file")
+	flag.Parse()
+
+	f, err := os.Open(*filePath)
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Opening inout file: %v\n", err)
+		os.Exit(1)
+	}
+	defer f.Close()
+
+	scanner := bufio.NewScanner(f)
 	frequences := make([]int, 0)
 
 	for scanner.Scan() {
@@ -16,8 +27,8 @@ func main() {
 		frequences = append(frequences, frequency)
 	}
 
-	fmt.Printf("%d\n", getResultingFrequency(frequences))
-	fmt.Printf("%d\n", getTwiceResultedFrequency(frequences))
+	fmt.Printf("Resulting frequency: %d\n", getResultingFrequency(frequences))
+	fmt.Printf("Resulting frequency reached twice: %d\n", getTwiceResultedFrequency(frequences))
 }
 
 func getResultingFrequency(frequences []int) int {
@@ -28,19 +39,15 @@ func getResultingFrequency(frequences []int) int {
 	return result
 }
 
-func getTwiceResultedFrequency(frequnces []int) int {
-	currentFrequency := 0
+func getTwiceResultedFrequency(frequnces []int) (result int) {
 	calibrations := map[int]int{}
 
-main:
 	for {
 		for _, frequency := range frequnces {
-			currentFrequency += frequency
-			if calibrations[currentFrequency]++; calibrations[currentFrequency] == 2 {
-				break main
+			result += frequency
+			if calibrations[result]++; calibrations[result] == 2 {
+				return
 			}
 		}
 	}
-
-	return currentFrequency
 }
