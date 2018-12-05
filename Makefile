@@ -13,4 +13,9 @@ day3:
 	go build -o ./no-matter-how-you-slice-it/app no-matter-how-you-slice-it/*.go
 	no-matter-how-you-slice-it/app -p no-matter-how-you-slice-it/input.txt
 
-.PHONY: chronal-calibration ims
+repose-record:
+	echo "Repose Record"
+	go build -o ./repose-record/app repose-record/*.go
+	repose-record/app -p repose-record/input.txt && rm repose-record/app && echo
+
+.PHONY: chronal-calibration ims repose-record
