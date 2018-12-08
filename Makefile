@@ -4,14 +4,14 @@ chronal-calibration:
 	chronal-calibration/app -p chronal-calibration/input.txt && rm chronal-calibration/app && echo
 
 ims:
-	echo -e "Inventory Management System"
+	echo "Inventory Management System"
 	go build -o ./inventory-management-system/app inventory-management-system/*.go
 	inventory-management-system/app -p inventory-management-system/input.txt && rm inventory-management-system/app && echo
 
 day3:
-	echo -e "No Matter How You Slice It"
+	echo "No Matter How You Slice It"
 	go build -o ./no-matter-how-you-slice-it/app no-matter-how-you-slice-it/*.go
-	no-matter-how-you-slice-it/app -p no-matter-how-you-slice-it/input.txt
+	no-matter-how-you-slice-it/app -p no-matter-how-you-slice-it/input.txt && rm no-matter-how-you-slice-it/app && echo
 
 repose-record:
 	echo "Repose Record"
