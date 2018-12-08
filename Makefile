@@ -18,4 +18,9 @@ repose-record:
 	go build -o ./repose-record/app repose-record/*.go
 	repose-record/app -p repose-record/input.txt && rm repose-record/app && echo
 
-.PHONY: chronal-calibration ims repose-record
+alchemical-reduction:
+	echo "Alchemical Reduction"
+	go build -o ./alchemical-reduction/app alchemical-reduction/*.go
+	alchemical-reduction/app -p alchemical-reduction/input.txt && rm alchemical-reduction/app && echo
+
+.PHONY: chronal-calibration ims day3 repose-record alchemical-reduction
