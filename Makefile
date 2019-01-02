@@ -23,4 +23,9 @@ alchemical-reduction:
 	go build -o ./alchemical-reduction/app alchemical-reduction/*.go
 	alchemical-reduction/app -p alchemical-reduction/input.txt && rm alchemical-reduction/app && echo
 
-.PHONY: chronal-calibration ims day3 repose-record alchemical-reduction
+chronal-coordinates:
+	echo "Chronal Coordinates"
+	go build -o ./chronal-coordinates/app chronal-coordinates/*.go
+	chronal-coordinates/app -p chronal-coordinates/input.txt && rm chronal-coordinates/app && echo
+
+.PHONY: chronal-calibration ims day3 repose-record alchemical-reduction chronal-coordinates
